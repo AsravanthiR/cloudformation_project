@@ -13,6 +13,7 @@ Resources:
       BucketName: sravanthi-cloudformation-bucket
   MyQueue:
     Type: AWS::SQS::Queue
+
   SravanthiInstance:
     Type: AWS::EC2::Instance
     Properties:
@@ -31,12 +32,28 @@ Resources:
       Subnets:
         - subnet-0e8cecdb378d728af
         - subnet-0441c0b1c024fa494
+      SecurityGroups:
+        - !GetAtt SravanthiALBSecurityGroup.GroupId
 
   SravanthiInstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: AllowEC2Traffic
       GroupDescription: Enable SSH and Http access on the inbound port
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: SravanthiInstanceSecurityGroup
+
+  SravanthiALBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: sravanthiALB
+      GroupDescription: ELB security group
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
