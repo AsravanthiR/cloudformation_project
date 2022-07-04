@@ -1,5 +1,10 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Academy Demo CloudFormation
+
+Outputs:
+  SravanthiApplicationLoadBalancer:
+    Value: !GetAtt SravanthiApplicationLoadBalancer.DNSName
+
 Resources:
   S3Bucket:
     Type: "AWS::S3::Bucket"
@@ -17,7 +22,7 @@ Resources:
         - Key: Name
           Value: sravanthiEc2
 
-  ApplicationLoadBalancer:
+  SravanthiApplicationLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Scheme: internet-facing
