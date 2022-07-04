@@ -14,8 +14,16 @@ Resources:
       InstanceType: t2.micro
       ImageId: !Ref LatestAmiId
       Tags:
-        - Key: BucketName
+        - Key: Name
           Value: sravanthiEc2
+
+  ApplicationLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Scheme: internet-facing
+      Subnets:
+        - subnet-0e8cecdb378d728af
+        - subnet-0441c0b1c024fa494
 
 Parameters:
   LatestAmiId:
