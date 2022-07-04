@@ -18,6 +18,8 @@ Resources:
     Properties:
       InstanceType: t2.micro
       ImageId: !Ref LatestAmiId
+      SecurityGroupIds:
+        - !Ref SravanthiInstanceSecurityGroup
       Tags:
         - Key: Name
           Value: sravanthiEc2
@@ -29,6 +31,20 @@ Resources:
       Subnets:
         - subnet-0e8cecdb378d728af
         - subnet-0441c0b1c024fa494
+
+  SravanthiInstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: AllowEC2Traffic
+      GroupDescription: Enable SSH and Http access on the inbound port
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: SravanthiInstanceSecurityGroup
 
 Parameters:
   LatestAmiId:
